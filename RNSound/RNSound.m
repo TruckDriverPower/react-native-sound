@@ -111,7 +111,7 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(enable : (BOOL)enabled) {
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryAmbient error:nil];
-    [session setActive:active withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+    [session setActive:enabled withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
 }
 
 RCT_EXPORT_METHOD(setActive : (BOOL)active) {
@@ -186,7 +186,7 @@ RCT_EXPORT_METHOD(setCategory
 RCT_EXPORT_METHOD(enableInSilenceMode : (BOOL)enabled) {
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [session setActive:active withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+    [session setActive:enabled withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
 }
 
 RCT_EXPORT_METHOD(prepare
@@ -239,7 +239,7 @@ RCT_EXPORT_METHOD(prepare
 RCT_EXPORT_METHOD(play
                   : (nonnull NSNumber *)key withCallback
                   : (RCTResponseSenderBlock)callback) {
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     [[NSNotificationCenter defaultCenter]
         addObserver:self
            selector:@selector(audioSessionChangeObserver:)
@@ -362,7 +362,7 @@ RCT_EXPORT_METHOD(setSpeakerPhone : (BOOL)on) {
         [session overrideOutputAudioPort:AVAudioSessionPortOverrideNone
                                    error:nil];
     }
-    [session setActive:true error:nil];
+    [session setActive:true withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
 }
 
 + (BOOL)requiresMainQueueSetup {
